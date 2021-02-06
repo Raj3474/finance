@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price</th>
+                <th scope="col">TOTAL</th>
+            </tr>
+        </thead>
+        <tfoot>
+            <tr>
+                <td colspan="4"></td>
+                <th>{{ grandtotal | usd }}</td>
+            </tr>
+        </tfoot>
+        <tbody>
+            {% for line in quote %}
+                <tr>
+                    <td scope="row">{{ line.symbol }}</td>
+                    <td>{{ line.name }}</td>
+                    <td>{{ line.shares }}</td>
+                    <td>{{ line.price | usd }}</td>
+                    <td>{{ line.total | usd }}</td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <td colspan="4">CASH</td>
+                <td>{{ cash | usd }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

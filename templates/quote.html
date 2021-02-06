@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Quote
+{% endblock %}
+
+{% block main %}
+    <form action="/quote" method="post">
+        <div class="form-group">
+            <input id="symbol" autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+            <div id="symbolTooltip"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Quote</button>
+    </form>
+
+    <script>
+        var isSubmitClick = false;
+
+        $(document).ready(function(){
+
+            $('.btn').click(function(e){
+
+                isSubmitClick = true;
+                e.preventDefault();
+
+                if(symbolValidation('symbol')){
+                    $('form').submit();
+                }
+            })
+
+            $('#symbol').keyup(function(){
+                symbolValidation('symbol');
+            });
+        });
+
+    </script>
+
+{% endblock %}

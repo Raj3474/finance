@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Register
+{% endblock %}
+
+{% block main %}
+    <div id="alert" role="alert"></div>
+    <form action="/register" method="post">
+        <div class="form-group">
+            <input id="username" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text" onkeyup="usernameValidation();">
+            <div id="usernameTooltip"></div>
+        </div>
+
+        <div class="form-group">
+            <input id="password" class="form-control" name="password" placeholder="Password" type="password" onkeyup="passwordValidation();">
+            <div id="passwordTooltip"></div>
+        </div>
+
+        <div class="form-group">
+            <input id="password-confirmation" class="form-control" name="confirmation" placeholder="Password Again" type="password" onkeyup="passwordConfirmation();">
+            <div id="password-confirmationTooltip"></div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Register</button>
+    </form>
+
+    <script>
+        var isSubmitClick = false;
+        $(document).ready( function(){
+
+            $('.btn').click(function(e){
+
+                isSubmitClick = true;
+                e.preventDefault();
+
+                var username = $('#username').val();
+                var usernameTest = usernameValidation('username');
+                var passwordTest = passwordValidation('password');
+                var passwordConfirmationTest = passwordConfirmation('password', 'password-confirmation');
+
+                console.log(usernameTest, passwordTest, passwordConfirmationTest)
+                if( usernameTest && passwordTest && passwordConfirmationTest){
+                    $.get('/check?username=' + username, function(data){
+                        if(data == true){
+                            $('#alert').fadeOut();
+                            $('#username').css('border', '#28a745 solid 1px');
+                            $('form').submit();
+                        }
+                        else{
+                            $('#alert').html('username is not available').css('display', 'inline-block')
+                            .addClass("alert alert-danger border text-center mb-5px col-4");
+                            $('#username').css('border', 'rgb(255, 153, 153) solid 1px')
+                        }
+                    });
+                }
+
+            });
+
+            $('#username').keyup(function(){
+                usernameValidation('username');
+            });
+
+            $('#password').keyup(function(){
+                passwordValidation('password');
+            });
+
+            $('#password, #password-confirmation').keyup(function(){
+                passwordConfirmation('password', 'password-confirmation');
+            });
+        });
+    </script>
+{% endblock %}

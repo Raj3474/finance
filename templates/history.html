@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    History
+{% endblock %}
+
+{% block main %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col">Symbol</th>
+                <th scope="col">Name</th>
+                <th scope="col">Status</th>
+                <th scope="col">Shares</th>
+                <th scope="col">Price</th>
+                <th scope="col">Transacted</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in quote %}
+                <tr>
+                    <td scope="row">{{ line.symbol }}</td>
+                    <td scope="row">{{ line.name}}</td>
+                    {% if line.shares | int > 0 %}
+                        <td>Buy</td>
+                    {% else %}
+                        <td>Sell</td>
+                    {% endif %}
+                    <td>{{ line.shares | int | abs }}</td>
+                    <td>{{ line.price | usd }}</td>
+                    <td>{{ line.time }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

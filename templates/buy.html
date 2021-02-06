@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Buy
+{% endblock %}
+
+{% block main %}
+    <form action="/buy" method="post">
+        <div class="form-group">
+            <input id="symbol" autocomplete="off" autofocus class="form-control" name="symbol" placeholder="Symbol" type="text">
+            <div id="symbolTooltip"></div>
+        </div>
+        <div class="form-group">
+            <input id="shares" class="form-control" name="shares" placeholder="Shares" type="number" min="1">
+            <div id="sharesTooltip"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Buy</button>
+    </form>
+
+     <script>
+        var isSubmitClick = false;
+
+        $(document).ready(function(){
+
+            $('.btn').click(function(e){
+
+                isSubmitClick = true;
+                e.preventDefault();
+
+                var symbolTest = symbolValidation('symbol');
+                var sharesTest = sharesValidation('shares');
+
+                if( symbolTest && sharesTest){
+                    $('form').submit();
+                }
+            })
+
+            $('#symbol').keyup(function(){
+                symbolValidation('symbol');
+            });
+
+            $('#shares').change(function(){
+                sharesValidation('shares');
+            }).keyup(function(){
+                sharesValidation('shares');
+            });
+        });
+
+    </script>
+{% endblock %}

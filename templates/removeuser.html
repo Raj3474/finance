@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Delete Account
+{% endblock %}
+
+{% block main %}
+    <form action="/removeuser" method="post">
+
+        <div class="form-group">
+            <input id="password" class="form-control" name="password" placeholder="Password" type="password">
+            <div id="passwordTooltip"></div>
+        </div>
+
+        <div class="form-group">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" name="check" id="Check1">
+                <label id="Check1Text" class="custom-control-label" for="Check1">All the data including <br>transactions' will be erase</label>
+                <div id="Check1Tooltip"></div>
+            </div>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Remove Account</button>
+    </form>
+
+    <script>
+
+        var isSubmitClick = false;
+        $(document).ready(function(){
+            $('.btn').click(function(e){
+                isSubmitClick = true;
+                e.preventDefault();
+
+                var passwordTest = passwordValidation('password');
+                var checkboxTest = checkValidation('Check1');
+
+                if( passwordTest && checkboxTest){
+                    $('form').submit()
+                }
+            })
+
+            $('#password').keyup(function(){
+                usernameValidation('password');
+            })
+
+            $('#Check1').change(function(){
+                checkValidation('Check1');
+            })
+        });
+
+    </script>
+{% endblock %}

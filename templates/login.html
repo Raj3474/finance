@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Log In
+{% endblock %}
+
+{% block main %}
+    <form action="/login" method="post">
+        <div class="form-group">
+            <input id="username" autocomplete="off" autofocus class="form-control" name="username" placeholder="Username" type="text">
+            <div id="usernameTooltip"></div>
+        </div>
+        <div class="form-group">
+            <input id="password" class="form-control" name="password" placeholder="Password" type="password">
+            <div id="passwordTooltip"></div>
+        </div>
+        <button class="btn btn-primary" type="submit">Log In</button>
+    </form>
+    <script>
+        var isSubmitClick = false;
+        $(document).ready( function(){
+
+            $('.btn').click(function(e){
+
+                isSubmitClick = true;
+                e.preventDefault();
+
+                var usernameTest = usernameValidation('username');
+                var passwordTest = passwordValidation('password');
+
+                if( usernameTest && passwordTest){
+                    $('form').submit()
+                }
+            })
+
+            $('#username').keyup(function(){
+                usernameValidation('username');
+            })
+
+            $('#password').keyup(function(){
+                usernameValidation('password');
+            })
+        });
+    </script>
+{% endblock %}

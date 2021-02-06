@@ -33,13 +33,14 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Configure CS50 Library to use SQLite database
-db = SQL("sqlite:///finance.db")
+db = SQL(os.getenv("DATABASE_URL"))
 
 
 # Make sure API key is set
-if not os.environ.get("API_KEY"):
-    raise RuntimeError("API_KEY not set")
+# if not os.environ.get("API_KEY"):
+#     raise RuntimeError("API_KEY not set")
 
+API_KEY = "pk_41ca5481ab1b4f06926903fe931ef911"
 
 @app.route("/")
 @login_required

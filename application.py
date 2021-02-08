@@ -40,7 +40,7 @@ db = SQL(os.getenv("DATABASE_URL"))
 # if not os.environ.get("API_KEY"):
 #     raise RuntimeError("API_KEY not set")
 
-API_KEY = "pk_41ca5481ab1b4f06926903fe931ef911"
+#API_KEY = "pk_41ca5481ab1b4f06926903fe931ef911"
 
 @app.route("/")
 @login_required
